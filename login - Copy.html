@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Daily UI - Day 1 Sign In</title>
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+<form method = 'post' action = 'login.php' >
+
+	<table width = '400' border = '5' align = 'center'>
+	
+			<tr>
+					<td align = 'center' colspan = '5' ><h1>REGISTRATION FORM </h1> </td>
+			
+			</tr>
+	
+
+			
+						<tr>
+					<td align = 'center'> Passward</td>
+					<td><input type = 'password' name = 'pass'></td>
+	
+			</tr>
+			
+						<tr>
+					<td align = 'center'>Email</td>
+					<td><input type = 'email' name = 'email'></td>
+	
+			</tr>
+			
+						<tr>
+					<td colspan = '5' align = 'center'><input type = 'submit' name = 'submit'
+					value = 'Login'></td>
+					
+	
+			</tr>
+	
+	</table>
+
+</form>
+<center>
+<font color ='red' size ='8'>Not registered yet</font><a href = 'test3.php'> sign up here</a>
+</center>
+</body>
+
+
+
+<script>
+	$(document).ready(function () {
+    	$('#logo').addClass('animated fadeInDown');
+    	$("input:text:visible:first").focus();
+	});
+	$('#username').focus(function() {
+		$('label[for="username"]').addClass('selected');
+	});
+	$('#username').blur(function() {
+		$('label[for="username"]').removeClass('selected');
+	});
+	$('#password').focus(function() {
+		$('label[for="password"]').addClass('selected');
+	});
+	$('#password').blur(function() {
+		$('label[for="password"]').removeClass('selected');
+	});
+</script>
+
+</html>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "rizq";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+} 
+
+
+if(isset($_POST['submit'])){
+			
+
+				 $user_pass = $_POST['pass'];
+				 $user_email = $_POST['email'];
+					
+
+		
+				if($user_pass == ''){
+					echo "<script> alert('Please enter your password :')</script>";
+							exit();
+				}
+				if($user_email == ''){
+					echo "<script> alert('Please enter your email :')</script>";
+							exit();
+				}
+					
+					
+				$sql = "SELECT * FROM login u where u.pass = '$user_pass ' and u.email ='$user_email'";
+				$result = mysqli_query($conn, $sql);
+							if (mysqli_num_rows($result) > 0)  {
+							echo "<script>window.open('welcome.php','_self')</script>";
+							} 
+							else {
+							echo "incorrect email or passward";
+							}
+
+							$conn->close();
+				}
+
+
+?>
